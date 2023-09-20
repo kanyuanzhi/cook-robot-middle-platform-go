@@ -109,3 +109,34 @@ func (api *SeasoningApi) Add(c *gin.Context) {
 
 	response.SuccessMessageData(c, addSeasoningResponse, "添加菜系成功")
 }
+
+func (api *SeasoningApi) UpdatePumpRatios(c *gin.Context) {
+	var updateSeasoningPumpRatiosRequest request.UpdateSeasoningPumpRatios
+	if err := request.ShouldBindJSON(c, &updateSeasoningPumpRatiosRequest); err != nil {
+		response.ErrorMessage(c, err.Error())
+		return
+	}
+
+	tx := global.FXDb.Begin()
+
+	for _, seasoning := range updateSeasoningPumpRatiosRequest.Seasonings {
+		sysSeasoning := model.SysSeasoning{
+			FXModel: global.FXModel{
+				Id: seasoning.Id,
+			},
+			Ratio: seasoning.Ratio,
+		}
+		if err := tx.Model(&sysSeasoning).Update("ratio", sysSeasoning.Ratio).Error; err != nil {
+			tx.Rollback()
+			response.ErrorMessage(c, err.Error())
+			return
+		}
+	}
+
+	if err := tx.Commit().Error; err != nil {
+		response.ErrorMessage(c, err.Error())
+		return
+	}
+
+	response.SuccessMessage(c, "更新成功")
+}

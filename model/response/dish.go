@@ -1,6 +1,9 @@
 package response
 
-import "github.com/kanyuanzhi/middle-platform/model"
+import (
+	"github.com/google/uuid"
+	"github.com/kanyuanzhi/middle-platform/model"
+)
 
 type CountDishes struct {
 	Count int64 `json:"count"`
@@ -20,4 +23,13 @@ type AddDish struct {
 
 type UpdateDishWithSteps struct {
 	Dish model.DishInfo `json:"dish"`
+}
+
+type GetDish struct {
+	Dish model.DishInfo `json:"dish"`
+}
+
+type AddDishCustomSteps struct {
+	UUID        uuid.UUID                `json:"uuid"`
+	CustomSteps []map[string]interface{} `json:"customSteps"`
 }

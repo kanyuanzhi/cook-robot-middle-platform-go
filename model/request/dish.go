@@ -1,5 +1,7 @@
 package request
 
+import "github.com/google/uuid"
+
 type CountDishes struct {
 	Filter              string `json:"filter" form:"filter"`
 	EnableCuisineFilter bool   `json:"enableCuisineFilter" form:"enableCuisineFilter"`
@@ -31,4 +33,22 @@ type AddDish struct {
 	Name    string                   `json:"name"`
 	Cuisine uint                     `json:"cuisine"`
 	Steps   []map[string]interface{} `json:"steps"`
+}
+
+type GetDish struct {
+	UUID string `json:"uuid" form:"uuid"`
+}
+
+type UpdateDishCustomSteps struct {
+	Id              uint                                `json:"id" form:"id"`
+	CustomStepsList map[string][]map[string]interface{} `json:"customStepsList" form:"customStepsList"`
+}
+
+type AddDishCustomSteps struct {
+	Id uint `json:"id" form:"id"`
+}
+
+type DeleteDishCustomSteps struct {
+	Id   uint      `json:"id" form:"id"`
+	UUID uuid.UUID `json:"uuid" form:"uuid"`
 }

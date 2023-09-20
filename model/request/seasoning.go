@@ -22,3 +22,7 @@ type AddSeasoning struct {
 	Pump  uint32 `json:"pump"`
 	Ratio uint32 `json:"ratio"`
 }
+
+type UpdateSeasoningPumpRatios struct {
+	Seasonings []model.SeasoningInfo `json:"seasonings"`
+}
