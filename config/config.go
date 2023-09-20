@@ -1,9 +1,10 @@
 package config
 
 type Config struct {
-	System   System   `yaml:"system"`
-	Postgres Postgres `yaml:"postgres"`
-	Sqlite   Sqlite   `yaml:"sqlite"`
+	System     System     `yaml:"system"`
+	Postgres   Postgres   `yaml:"postgres"`
+	Sqlite     Sqlite     `yaml:"sqlite"`
+	CommandRPC CommandRPC `yaml:"commandRPC"`
 }
 
 type System struct {
@@ -25,4 +26,9 @@ type Postgres struct {
 type Sqlite struct {
 	Path     string `yaml:"path"`
 	Database string `yaml:"database"`
+}
+
+type CommandRPC struct {
+	Host string `yaml:"host"`
+	Port int    `yaml:"port"`
 }

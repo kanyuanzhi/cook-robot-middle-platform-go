@@ -56,4 +56,8 @@ func InitPrivateRouter(routerGroup *gin.RouterGroup) {
 	//routerGroup.PUT("ingredient-shape/update", ingredientShapeApi.Update)
 	//routerGroup.PUT("ingredient-shape/update-sorts", ingredientShapeApi.UpdateSorts)
 	//routerGroup.DELETE("ingredient-shape/delete", ingredientShapeApi.Delete)
+
+	controllerApi := &private.ControllerApi{}
+	routerGroup.POST("controller/execute", controllerApi.Execute)
+	routerGroup.GET("controller/fetch-status", controllerApi.FetchStatus)
 }

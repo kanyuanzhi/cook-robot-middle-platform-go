@@ -15,6 +15,6 @@ postgres:
 sqlite:
   path: ./cook.db
 
-controller:
-  grpcHost: localhost
-  grpcPort: 50051
+commandRPC:
+  host: localhost
+  port: 50051

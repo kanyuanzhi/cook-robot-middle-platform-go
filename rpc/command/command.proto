@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option go_package = "/command";
+
+package command;
+
+service CommandService {
+  rpc Execute(CommandRequest) returns (CommandResponse) {}
+  rpc FetchStatus(FetchRequest) returns (FetchResponse) {}
+  rpc Pause(PauseAndResumeRequest) returns (PauseAndResumeResponse) {}
+  rpc Resume(PauseAndResumeRequest) returns (PauseAndResumeResponse) {}
+  rpc Shutdown(ShutdownRequest) returns (ShutdownResponse) {}
+}
+
+message CommandRequest {
+  string command_json = 1;
+}
+
+message CommandResponse {
+  int32 result = 1;
+}
+
+message FetchRequest {
+  bool empty = 1;
+}
+
+message FetchResponse {
+  string status_json = 1;
+}
+
+message PauseAndResumeRequest{
+  bool empty = 1;
+}
+
+message PauseAndResumeResponse {
+  int32 result = 1;
+}
+
+message ShutdownRequest {
+  bool empty = 1;
+}
+
+message ShutdownResponse {
+  int32 result = 1;
+}
+
+//protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative commandRPC.proto
