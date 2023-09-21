@@ -1,0 +1,31 @@
+system:
+  port: 8889
+  successCode: 1
+  successMessage: Success
+  errorCode: 0
+  errorMessage: Failed
+
+postgres:
+  host: 127.0.0.1
+  port: 5432
+  user: postgres
+  password: 123456
+  database: szzn_admin
+
+sqlite:
+  path: ./cook.db
+
+commandRPC:
+  host: localhost
+  port: 50051
+
+SoftwareUpdaterRPC:
+  #  host: 192.168.6.10
+  host: localhost
+  port: 12305
+  fileServerPort: 12306
+  savePath: ./unzip
+  unzipPath: ./unzip
+  uiFolderName: cookRobot-linux-arm64
+  middlePlatformFilename: cook-robot-middle-platform-go
+  controllerFilename: cook-robot-controller-go

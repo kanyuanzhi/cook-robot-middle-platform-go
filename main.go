@@ -24,6 +24,7 @@ func main() {
 	//}
 
 	global.FXCommandRpcClient = boot.CommandRpcClient()
+	global.FXSoftwareUpdaterRpcClient = boot.SoftwareUpdaterRpcClient()
 
 	ticker := time.NewTicker(100 * time.Millisecond)
 	defer ticker.Stop()

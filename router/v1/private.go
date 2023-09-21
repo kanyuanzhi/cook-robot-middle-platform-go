@@ -60,4 +60,18 @@ func InitPrivateRouter(routerGroup *gin.RouterGroup) {
 	controllerApi := &private.ControllerApi{}
 	routerGroup.POST("controller/execute", controllerApi.Execute)
 	routerGroup.GET("controller/fetch-status", controllerApi.FetchStatus)
+
+	systemApi := &private.SystemApi{}
+	routerGroup.GET("system/get-qrCode", systemApi.GetQrCode)
+	routerGroup.GET("system/shutdown", systemApi.Shutdown)
+
+	softwareUpdaterApi := &private.SoftwareUpdaterApi{
+		IsUpdating:     false,
+		LatestVersion:  "",
+		UpdateFilePath: []string{},
+	}
+	routerGroup.GET("softwareUpdater/get-softwareInfo", softwareUpdaterApi.GetSoftwareInfo)
+	routerGroup.GET("softwareUpdater/check-updateInfo", softwareUpdaterApi.CheckUpdateInfo)
+	routerGroup.GET("softwareUpdater/check-updatePermission", softwareUpdaterApi.CheckUpdatePermission)
+	routerGroup.GET("softwareUpdater/update", softwareUpdaterApi.Update)
 }

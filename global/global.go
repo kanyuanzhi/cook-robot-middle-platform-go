@@ -2,17 +2,20 @@ package global
 
 import (
 	"github.com/kanyuanzhi/middle-platform/config"
-	pb "github.com/kanyuanzhi/middle-platform/rpc/command" // 替换为你的实际包路径
+	pbCommand "github.com/kanyuanzhi/middle-platform/rpc/command"                 // 替换为你的实际包路径
+	pbSoftwareUpdater "github.com/kanyuanzhi/middle-platform/rpc/softwareUpdater" // 替换为你的实际包路径
 	"github.com/robfig/cron/v3"
 	"gorm.io/gorm"
 )
 
 var (
-	FXConfig           config.Config
-	FXDb               *gorm.DB
-	FXCron             *cron.Cron
-	FXCommandRpcClient pb.CommandServiceClient
-	FXControllerStatus ControllerStatus
+	FXConfig                   config.Config
+	FXDb                       *gorm.DB
+	FXCron                     *cron.Cron
+	FXCommandRpcClient         pbCommand.CommandServiceClient
+	FXSoftwareUpdaterRpcClient pbSoftwareUpdater.UpdateClient
+	FXControllerStatus         ControllerStatus
+	FXSoftwareInfo             config.SoftwareInfo
 )
 
 type FXModel struct {

@@ -1,0 +1,16 @@
+.idea
+.vscode
+
+*.exe
+
+#*.db
+
+cook-robot-middle-platform-go
+
+go.sum
+
+*.zip
+unzip
+
+logs
+*.log
