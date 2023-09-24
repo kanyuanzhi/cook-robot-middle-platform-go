@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+option go_package = "/rpcv1";
+
+package rpcv1;
+
+service DataUpdater {
+  rpc FetchOfficialDishes(FetchOfficialDishesRequest) returns (FetchOfficialDishesResponse) {}
+  rpc FetchIngredients(FetchIngredientsRequest) returns (FetchIngredientsResponse) {}
+  rpc SynchronizePersonalDishes(SynchronizePersonalDishesRequest) returns (SynchronizePersonalDishesResponse) {}
+  rpc UploadPersonalDishes(UploadPersonalDishesRequest) returns (UploadPersonalDishesResponse) {}
+}
+
+message FetchOfficialDishesRequest {
+  string user_serial_number = 1;
+  bytes local_dishes_info_json = 2;
+}
+
+message FetchOfficialDishesResponse {
+  bytes local_need_add_dishes_json = 1;  // 本地需要新增的菜品
+  bytes local_need_update_dishes_json = 2;  // 本地需要更新的菜品
+  bytes local_need_delete_dishes_uuids_json = 3;  // 本地需要删除的菜品uuid
+  bytes cuisines_json = 4;
+}
+
+message FetchIngredientsRequest {
+  string user_serial_number = 1;
+}
+
+message FetchIngredientsResponse {
+  bytes ingredients_json = 1;
+  bytes ingredient_types_json = 2;
+  bytes ingredient_shapes_json = 3;
+}
+
+message FetchSeasoningsRequest {
+  string user_serial_number = 1;
+}
+
+message FetchSeasoningsResponse {
+  bytes seasonings_json = 1;
+}
+
+message SynchronizePersonalDishesRequest {
+  string user_serial_number = 1;
+  bytes local_dishes_info_json = 2;
+  bytes local_deleted_dish_uuids_json = 3; // 远程需要删除的菜品uuid
+}
+
+message SynchronizePersonalDishesResponse {
+  bytes remote_need_add_dish_uuids_json = 1;  // 远程需要更新的菜品uuid
+  bytes remote_need_update_dish_uuids_json = 2;// 远程需要新增的菜品uuid
+  bytes local_need_add_dishes_json = 3;  // 本地需要新增的菜品
+  bytes local_need_update_dishes_json = 4;  // 本地需要更新的菜品
+  bytes local_need_delete_dish_uuids_json = 5;  // 本地需要删除的菜品uuid
+  int64 remote_need_delete_dishes_number = 6; // 远程需要删除的菜品数量
+}
+
+message UploadPersonalDishesRequest {
+  string user_serial_number = 1;
+  bytes remote_need_add_dishes_json = 2;
+  bytes remote_need_update_dishes_json = 3; // 远程需要删除的菜品uuid
+}
+
+message UploadPersonalDishesResponse {
+  bool empty = 1;
+}

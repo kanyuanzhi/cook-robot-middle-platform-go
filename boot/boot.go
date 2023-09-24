@@ -54,4 +54,5 @@ func logo(port int) {
 func init() {
 	utils.Reload("middlePlatformConfig", &global.FXConfig)
 	utils.Reload("softwareInfo", &global.FXSoftwareInfo)
+	utils.GenerateSerialNumber()
 }

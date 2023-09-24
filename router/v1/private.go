@@ -22,10 +22,12 @@ func InitPrivateRouter(routerGroup *gin.RouterGroup) {
 	routerGroup.DELETE("dish/delete", dishApi.Delete) //
 	//routerGroup.POST("dish/update-image", dishApi.UpdateImage)
 	routerGroup.POST("dish/add", dishApi.Add)                                //
+	routerGroup.PUT("dish/update-mark", dishApi.UpdateMark)                  //
 	routerGroup.PUT("dish/update-with-steps", dishApi.UpdateWithSteps)       //
 	routerGroup.PUT("dish/update-customSteps", dishApi.UpdateCustomSteps)    //
 	routerGroup.PUT("dish/add-customSteps", dishApi.AddCustomSteps)          //
 	routerGroup.DELETE("dish/delete-customSteps", dishApi.DeleteCustomSteps) //
+	routerGroup.POST("dish/add-to-personals", dishApi.AddToPersonals)        //
 
 	seasoningApi := &private.SeasoningApi{}
 	routerGroup.GET("seasoning/list", seasoningApi.List) //
@@ -74,4 +76,9 @@ func InitPrivateRouter(routerGroup *gin.RouterGroup) {
 	routerGroup.GET("softwareUpdater/check-updateInfo", softwareUpdaterApi.CheckUpdateInfo)
 	routerGroup.GET("softwareUpdater/check-updatePermission", softwareUpdaterApi.CheckUpdatePermission)
 	routerGroup.GET("softwareUpdater/update", softwareUpdaterApi.Update)
+
+	dataUpdaterApi := &private.DataUpdaterApi{}
+	routerGroup.PUT("dataUpdater/update-officialDishes", dataUpdaterApi.UpdateOfficialDishes)
+	routerGroup.PUT("dataUpdater/update-ingredients", dataUpdaterApi.UpdateIngredients)
+	routerGroup.PUT("dataUpdater/synchronize-personalDishes", dataUpdaterApi.SynchronizePersonalDishes)
 }

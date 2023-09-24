@@ -10,6 +10,7 @@ import (
 	"github.com/kanyuanzhi/middle-platform/model/request"
 	"github.com/kanyuanzhi/middle-platform/model/response"
 	"github.com/kanyuanzhi/middle-platform/utils"
+	"log"
 	"strconv"
 	"strings"
 )
@@ -24,7 +25,7 @@ func (api *DishApi) Count(c *gin.Context) {
 	}
 
 	filterDb, err := request.GenerateDishQueryCondition(countDishesRequest.Filter, countDishesRequest.EnableCuisineFilter,
-		strings.Split(countDishesRequest.CuisineFilter, ","))
+		strings.Split(countDishesRequest.CuisineFilter, ","), countDishesRequest.IsOfficial)
 	if err != nil {
 		response.ErrorMessage(c, err.Error())
 		return
@@ -51,7 +52,7 @@ func (api *DishApi) List(c *gin.Context) {
 	}
 
 	filterDb, err := request.GenerateDishQueryCondition(listDishesRequest.Filter, listDishesRequest.EnableCuisineFilter,
-		strings.Split(listDishesRequest.CuisineFilter, ","))
+		strings.Split(listDishesRequest.CuisineFilter, ","), listDishesRequest.IsOfficial)
 	if err != nil {
 		response.ErrorMessage(c, err.Error())
 		return
@@ -106,6 +107,32 @@ func (api *DishApi) Update(c *gin.Context) {
 	}
 
 	response.SuccessMessage(c, "更新成功")
+}
+
+func (api *DishApi) UpdateMark(c *gin.Context) {
+	var updateDishMarkRequest request.UpdateDishMark
+	if err := request.ShouldBindJSON(c, &updateDishMarkRequest); err != nil {
+		response.ErrorMessage(c, err.Error())
+		return
+	}
+
+	dish := model.SysDish{
+		FXModel: global.FXModel{
+			Id: updateDishMarkRequest.Id,
+		},
+		IsMarked: updateDishMarkRequest.Mark,
+	}
+
+	if err := global.FXDb.Model(&dish).Select("is_marked").Updates(dish).Error; err != nil {
+		response.ErrorMessage(c, err.Error())
+		return
+	}
+
+	if updateDishMarkRequest.Mark {
+		response.SuccessMessage(c, "已添加我的菜品")
+	} else {
+		response.SuccessMessage(c, "已移除我的菜品")
+	}
 }
 
 func (api *DishApi) UpdateWithSteps(c *gin.Context) {
@@ -165,7 +192,36 @@ func (api *DishApi) Delete(c *gin.Context) {
 		})
 	}
 
-	if err := global.FXDb.Delete(&dishes).Error; err != nil {
+	if err := global.FXDb.Where("id in ?", deleteDishesRequest.Ids).Select("uuid", "owner").Find(&dishes).Error; err != nil {
+		response.ErrorMessage(c, err.Error())
+		return
+	}
+
+	log.Println(dishes)
+
+	var userDeletedDishes []model.SysUserDeletedDish
+	for _, dish := range dishes {
+		userDeletedDishes = append(userDeletedDishes, model.SysUserDeletedDish{
+			UUID:  dish.UUID,
+			Owner: dish.Owner,
+		})
+	}
+
+	tx := global.FXDb.Begin()
+
+	if err := tx.Create(&userDeletedDishes).Error; err != nil {
+		tx.Rollback()
+		response.ErrorMessage(c, err.Error())
+		return
+	}
+
+	if err := tx.Where("id in ?", deleteDishesRequest.Ids).Delete(&dishes).Error; err != nil {
+		tx.Rollback()
+		response.ErrorMessage(c, err.Error())
+		return
+	}
+
+	if err := tx.Commit().Error; err != nil {
 		response.ErrorMessage(c, err.Error())
 		return
 	}
@@ -196,7 +252,10 @@ func (api *DishApi) Add(c *gin.Context) {
 			uuid.New().String(): addDishRequest.Steps,
 			uuid.New().String(): addDishRequest.Steps,
 		},
-		Image: imageData,
+		Image:      imageData,
+		IsOfficial: false,
+		IsShared:   false,
+		Owner:      global.FXSoftwareInfo.SerialNumber,
 	}
 
 	if err := global.FXDb.Create(&dish).Error; err != nil {
@@ -213,10 +272,13 @@ func (api *DishApi) Add(c *gin.Context) {
 			Steps:           dish.Steps,
 			CustomStepsList: dish.CustomStepsList,
 			Cuisine:         dish.Cuisine,
+			IsOfficial:      dish.IsOfficial,
+			IsShared:        dish.IsShared,
+			Owner:           dish.Owner,
 		},
 	}
 
-	response.SuccessMessageData(c, addDishResponse, "添加成功")
+	response.SuccessMessageData(c, addDishResponse, "创建菜品"+dish.Name+"成功")
 }
 
 func (api *DishApi) UpdateImage(c *gin.Context) {
@@ -256,7 +318,7 @@ func (api *DishApi) UpdateImage(c *gin.Context) {
 
 	updatedImage := "data:image/png;base64," + base64.StdEncoding.EncodeToString(dish.Image)
 
-	response.SuccessMessageData(c, updatedImage, "更新菜谱图片成功")
+	response.SuccessMessageData(c, updatedImage, "更新菜品图片成功")
 }
 
 func (api *DishApi) Get(c *gin.Context) {
@@ -281,6 +343,9 @@ func (api *DishApi) Get(c *gin.Context) {
 			Steps:           dish.Steps,
 			CustomStepsList: dish.CustomStepsList,
 			Cuisine:         dish.Cuisine,
+			IsOfficial:      dish.IsOfficial,
+			IsShared:        dish.IsShared,
+			IsMarked:        dish.IsMarked,
 		},
 	}
 
@@ -374,4 +439,41 @@ func (api *DishApi) DeleteCustomSteps(c *gin.Context) {
 	}
 
 	response.SuccessMessage(c, "删除成功")
+}
+
+func (api *DishApi) AddToPersonals(c *gin.Context) {
+	var addDishToPersonalsRequest request.AddDishToPersonals
+	if err := request.ShouldBindJSON(c, &addDishToPersonalsRequest); err != nil {
+		response.ErrorMessage(c, err.Error())
+		return
+	}
+
+	dish := model.SysDish{
+		FXModel: global.FXModel{Id: addDishToPersonalsRequest.Id},
+	}
+
+	if err := global.FXDb.First(&dish).Error; err != nil {
+		response.ErrorMessage(c, err.Error())
+		return
+	}
+
+	personalDish := model.SysDish{
+		Name:            dish.Name,
+		UUID:            uuid.New(),
+		Steps:           dish.Steps,
+		CustomStepsList: dish.CustomStepsList,
+		Image:           dish.Image,
+		Cuisine:         dish.Cuisine,
+		IsOfficial:      false,
+		IsShared:        false,
+		IsMarked:        false,
+		Owner:           global.FXSoftwareInfo.SerialNumber,
+	}
+
+	if err := global.FXDb.Create(&personalDish).Error; err != nil {
+		response.ErrorMessage(c, err.Error())
+		return
+	}
+
+	response.SuccessMessage(c, "已添加至我的菜品")
 }

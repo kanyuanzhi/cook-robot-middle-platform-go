@@ -78,7 +78,6 @@ func (api *SoftwareUpdaterApi) CheckUpdatePermission(c *gin.Context) {
 		}
 	}
 	response.SuccessData(c, checkUpdatePermissionResponse)
-
 }
 
 func (api *SoftwareUpdaterApi) Update(c *gin.Context) {

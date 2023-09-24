@@ -15,6 +15,7 @@ type SysDish struct {
 	Cuisine         uint                                `json:"cuisine" gorm:"comment:菜系;default:1"`
 	IsOfficial      bool                                `json:"isOfficial" gorm:"comment:是否官方菜品;default:false"`
 	IsShared        bool                                `json:"isShared" gorm:"comment:是否共享菜品;default:false"`
+	IsMarked        bool                                `json:"isMarked" gorm:"是否收藏菜品至我的菜品;default:false"`
 	Owner           string                              `json:"owner" gorm:"comment:菜品所有者;default:''"`
 }
 
@@ -28,5 +29,6 @@ type DishInfo struct {
 	Cuisine         uint                                `json:"cuisine"`
 	IsOfficial      bool                                `json:"isOfficial"`
 	IsShared        bool                                `json:"isShared"`
+	IsMarked        bool                                `json:"isMarked"`
 	Owner           string                              `json:"owner"`
 }

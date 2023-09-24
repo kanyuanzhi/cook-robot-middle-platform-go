@@ -6,6 +6,7 @@ type CountDishes struct {
 	Filter              string `json:"filter" form:"filter"`
 	EnableCuisineFilter bool   `json:"enableCuisineFilter" form:"enableCuisineFilter"`
 	CuisineFilter       string `json:"cuisineFilter" form:"cuisineFilter"`
+	IsOfficial          bool   `json:"isOfficial" form:"isOfficial"`
 }
 
 type ListDishes struct {
@@ -18,6 +19,11 @@ type UpdateDish struct {
 	Id      uint   `json:"id"`
 	Name    string `json:"name"`
 	Cuisine uint   `json:"cuisine"`
+}
+
+type UpdateDishMark struct {
+	Id   uint `json:"id"`
+	Mark bool `json:"mark"`
 }
 
 type UpdateDishWithSteps struct {
@@ -51,4 +57,8 @@ type AddDishCustomSteps struct {
 type DeleteDishCustomSteps struct {
 	Id   uint      `json:"id" form:"id"`
 	UUID uuid.UUID `json:"uuid" form:"uuid"`
+}
+
+type AddDishToPersonals struct {
+	Id uint `json:"id" form:"id"`
 }

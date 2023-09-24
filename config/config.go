@@ -6,6 +6,7 @@ type Config struct {
 	Sqlite             Sqlite             `yaml:"sqlite"`
 	CommandRPC         CommandRPC         `yaml:"commandRPC"`
 	SoftwareUpdaterRPC SoftwareUpdaterRPC `yaml:"softwareUpdaterRPC"`
+	DataUpdaterRPC     DataUpdaterRPC     `yaml:"dataUpdaterRPC"`
 }
 
 type System struct {
@@ -43,4 +44,9 @@ type SoftwareUpdaterRPC struct {
 	UIFolderName           string `yaml:"uiFolderName"`
 	MiddlePlatformFilename string `yaml:"middlePlatformFilename"`
 	ControllerFilename     string `yaml:"controllerFilename"`
+}
+
+type DataUpdaterRPC struct {
+	Host string `yaml:"host"`
+	Port int    `yaml:"port"`
 }

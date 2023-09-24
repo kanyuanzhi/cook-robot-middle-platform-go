@@ -29,3 +29,8 @@ SoftwareUpdaterRPC:
   uiFolderName: cookRobot-linux-arm64
   middlePlatformFilename: cook-robot-middle-platform-go
   controllerFilename: cook-robot-controller-go
+
+DataUpdaterRPC:
+#  host: localhost
+  host: 221.229.103.87
+  port: 10001

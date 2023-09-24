@@ -1,8 +1,11 @@
 package utils
 
 import (
+	"github.com/kanyuanzhi/middle-platform/global"
 	"github.com/spf13/viper"
+	"gopkg.in/yaml.v3"
 	"log"
+	"net"
 	"os"
 )
 
@@ -32,4 +35,37 @@ func LoadLocalImage(path string) ([]byte, error) {
 		return nil, err
 	}
 	return imageData, nil
+}
+
+func GenerateSerialNumber() {
+	if global.FXSoftwareInfo.SerialNumber == "" {
+		ifaces, err := net.Interfaces()
+		if err != nil {
+			log.Fatalf("获取网络接口错误：%v", err)
+			return
+		}
+
+		// 遍历所有网络接口
+		for _, iface := range ifaces {
+			// 筛选出WLAN接口，可以根据具体的名称进行判断
+			if iface.Name == "wlan0" || iface.Name == "Wi-Fi" || iface.Name == "WLAN" {
+				global.FXSoftwareInfo.SerialNumber = "SN-XZYC-" + iface.HardwareAddr.String()
+				break
+			}
+		}
+
+		newData, err := yaml.Marshal(global.FXSoftwareInfo)
+		if err != nil {
+			log.Fatalf("无法序列化配置：%v", err)
+		}
+
+		err = os.WriteFile("softwareInfo.yaml", newData, os.ModePerm)
+		if err != nil {
+			log.Fatalf("无法写回配置文件：%v", err)
+		}
+
+		log.Println(global.FXSoftwareInfo)
+	} else {
+		log.Printf("设备序列号已生成：%s", global.FXSoftwareInfo.SerialNumber)
+	}
 }

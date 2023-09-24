@@ -8,6 +8,7 @@ import (
 
 func Router() *gin.Engine {
 	router := gin.New()
+	gin.SetMode(gin.ReleaseMode)
 	router.Use(middleware.Cors())
 	router.Use(gin.Recovery())
 	router.Use(gin.LoggerWithWriter(gin.DefaultWriter, "/api/v1/controller/fetch-status"))

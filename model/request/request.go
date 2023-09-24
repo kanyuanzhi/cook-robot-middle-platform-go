@@ -26,7 +26,7 @@ func ShouldBindQuery(c *gin.Context, obj interface{}) error {
 	return nil
 }
 
-func GenerateDishQueryCondition(filter string, enableCuisineFilter bool, cuisineFilter []string) (*gorm.DB, error) {
+func GenerateDishQueryCondition(filter string, enableCuisineFilter bool, cuisineFilter []string, isOfficial bool) (*gorm.DB, error) {
 	filterDb := global.FXDb.Model(&model.SysDish{})
 
 	if enableCuisineFilter {
@@ -42,6 +42,8 @@ func GenerateDishQueryCondition(filter string, enableCuisineFilter bool, cuisine
 		likeParam := "%" + filter + "%"
 		filterDb = filterDb.Where("name LIKE ?", likeParam)
 	}
+
+	filterDb = filterDb.Where("is_official", isOfficial)
 
 	return filterDb, nil
 }
