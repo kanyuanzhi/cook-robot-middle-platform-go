@@ -2,10 +2,10 @@ package private
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/kanyuanzhi/middle-platform/global"
-	"github.com/kanyuanzhi/middle-platform/model"
-	"github.com/kanyuanzhi/middle-platform/model/request"
-	"github.com/kanyuanzhi/middle-platform/model/response"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/global"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/model"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/model/request"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/model/response"
 )
 
 type IngredientShapeApi struct{}

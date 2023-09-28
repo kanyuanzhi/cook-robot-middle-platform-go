@@ -1,7 +1,7 @@
 package response
 
 import (
-	"github.com/kanyuanzhi/middle-platform/global"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/global"
 )
 
 type FetchControllerStatus struct {

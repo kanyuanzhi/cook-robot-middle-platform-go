@@ -2,8 +2,8 @@ package request
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/kanyuanzhi/middle-platform/global"
-	"github.com/kanyuanzhi/middle-platform/model"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/global"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/model"
 	"gorm.io/gorm"
 	"strconv"
 )

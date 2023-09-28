@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"github.com/kanyuanzhi/middle-platform/global"
-	"github.com/kanyuanzhi/middle-platform/model"
-	"github.com/kanyuanzhi/middle-platform/model/response"
-	pb "github.com/kanyuanzhi/middle-platform/rpc/dataUpdater"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/global"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/model"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/model/response"
+	pb "github.com/kanyuanzhi/cook-robot-middle-platform-go/rpc/dataUpdater"
 	"gorm.io/gorm"
 	"log"
 	"time"
@@ -109,6 +109,8 @@ func (api *DataUpdaterApi) UpdateOfficialDishes(c *gin.Context) {
 		return
 	}
 
+	api.UpdateIngredients(c)
+
 	updatedOfficialDishesResponse := response.UpdateOfficialDishes{
 		NewAddedDishesNumber: len(needAddDishes),
 		UpdatesDishesNumber:  len(needUpdateDishes),
@@ -190,7 +192,7 @@ func (api *DataUpdaterApi) UpdateIngredients(c *gin.Context) {
 		return
 	}
 
-	response.SuccessMessage(c, "更新成功")
+	//response.SuccessMessage(c, "更新成功")
 }
 
 func (api *DataUpdaterApi) SynchronizePersonalDishes(c *gin.Context) {

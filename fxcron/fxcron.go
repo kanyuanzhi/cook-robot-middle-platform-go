@@ -2,7 +2,7 @@ package fxcron
 
 import (
 	"github.com/google/uuid"
-	"github.com/kanyuanzhi/middle-platform/model"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/model"
 )
 
 var CronList []model.SysCron

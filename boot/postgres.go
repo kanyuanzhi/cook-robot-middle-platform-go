@@ -3,8 +3,8 @@ package boot
 import (
 	"database/sql"
 	"fmt"
-	"github.com/kanyuanzhi/middle-platform/config"
-	"github.com/kanyuanzhi/middle-platform/global"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/config"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/global"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log/slog"

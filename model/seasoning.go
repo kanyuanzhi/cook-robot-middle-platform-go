@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/kanyuanzhi/middle-platform/global"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/global"
 )
 
 type SysSeasoning struct {

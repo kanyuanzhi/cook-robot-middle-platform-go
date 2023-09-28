@@ -2,7 +2,7 @@ package response
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/kanyuanzhi/middle-platform/global"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/global"
 	"log/slog"
 	"net/http"
 )

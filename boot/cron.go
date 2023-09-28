@@ -2,8 +2,8 @@ package boot
 
 import (
 	"fmt"
-	"github.com/kanyuanzhi/middle-platform/fxcron"
-	"github.com/kanyuanzhi/middle-platform/global"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/fxcron"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/global"
 	"github.com/robfig/cron/v3"
 )
 

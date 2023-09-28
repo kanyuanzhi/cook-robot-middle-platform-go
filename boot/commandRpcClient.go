@@ -2,8 +2,8 @@ package boot
 
 import (
 	"fmt"
-	"github.com/kanyuanzhi/middle-platform/global"
-	pb "github.com/kanyuanzhi/middle-platform/rpc/command"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/global"
+	pb "github.com/kanyuanzhi/cook-robot-middle-platform-go/rpc/command"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )

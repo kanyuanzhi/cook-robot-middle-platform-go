@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
-	"github.com/kanyuanzhi/middle-platform/global"
-	"github.com/kanyuanzhi/middle-platform/model"
-	pb "github.com/kanyuanzhi/middle-platform/rpc/command"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/global"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/model"
+	pb "github.com/kanyuanzhi/cook-robot-middle-platform-go/rpc/command"
 	"log"
 	"time"
 )

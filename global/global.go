@@ -1,10 +1,10 @@
 package global
 
 import (
-	"github.com/kanyuanzhi/middle-platform/config"
-	pbCommand "github.com/kanyuanzhi/middle-platform/rpc/command"                 // 替换为你的实际包路径
-	pbDataUpdater "github.com/kanyuanzhi/middle-platform/rpc/dataUpdater"         // 替换为你的实际包路径
-	pbSoftwareUpdater "github.com/kanyuanzhi/middle-platform/rpc/softwareUpdater" // 替换为你的实际包路径
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/config"
+	pbCommand "github.com/kanyuanzhi/cook-robot-middle-platform-go/rpc/command"                 // 替换为你的实际包路径
+	pbDataUpdater "github.com/kanyuanzhi/cook-robot-middle-platform-go/rpc/dataUpdater"         // 替换为你的实际包路径
+	pbSoftwareUpdater "github.com/kanyuanzhi/cook-robot-middle-platform-go/rpc/softwareUpdater" // 替换为你的实际包路径
 	"github.com/robfig/cron/v3"
 	"gorm.io/gorm"
 )

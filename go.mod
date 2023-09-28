@@ -1,4 +1,4 @@
-module github.com/kanyuanzhi/middle-platform
+module github.com/kanyuanzhi/cook-robot-middle-platform-go
 
 go 1.21
 

@@ -1,6 +1,6 @@
 package request
 
-import "github.com/kanyuanzhi/middle-platform/model"
+import "github.com/kanyuanzhi/cook-robot-middle-platform-go/model"
 
 type ListCuisines struct {
 }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/middle-platform.iml" filepath="$PROJECT_DIR$/.idea/middle-platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/cook-robot-middle-platform-go.iml" filepath="$PROJECT_DIR$/.idea/cook-robot-middle-platform-go.iml" />
     </modules>
   </component>
 </project>

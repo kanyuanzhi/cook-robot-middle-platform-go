@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/kanyuanzhi/middle-platform/global"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/global"
 	"github.com/spf13/viper"
 	"gopkg.in/yaml.v3"
 	"log"

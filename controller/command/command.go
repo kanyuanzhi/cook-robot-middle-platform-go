@@ -1,6 +1,6 @@
 package command
 
-import "github.com/kanyuanzhi/middle-platform/controller/instruction"
+import "github.com/kanyuanzhi/cook-robot-middle-platform-go/controller/instruction"
 
 const (
 	COMMAND_NAME_COOK         = "cook"         // multiple

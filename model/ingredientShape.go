@@ -1,6 +1,6 @@
 package model
 
-import "github.com/kanyuanzhi/middle-platform/global"
+import "github.com/kanyuanzhi/cook-robot-middle-platform-go/global"
 
 type SysIngredientShape struct {
 	global.FXModel

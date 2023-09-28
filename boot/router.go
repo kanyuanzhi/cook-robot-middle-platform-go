@@ -2,8 +2,8 @@ package boot
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/kanyuanzhi/middle-platform/middleware"
-	"github.com/kanyuanzhi/middle-platform/router/v1"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/middleware"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/router/v1"
 )
 
 func Router() *gin.Engine {

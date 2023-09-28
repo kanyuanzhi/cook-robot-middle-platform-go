@@ -2,7 +2,7 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/kanyuanzhi/middle-platform/api/v1/private"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/api/v1/private"
 )
 
 func InitPrivateRouter(routerGroup *gin.RouterGroup) {

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/kanyuanzhi/middle-platform/boot"
-	"github.com/kanyuanzhi/middle-platform/fxcron"
-	"github.com/kanyuanzhi/middle-platform/global"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/boot"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/fxcron"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/global"
 	"log/slog"
 	"time"
 )
