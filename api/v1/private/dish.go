@@ -10,7 +10,6 @@ import (
 	"github.com/kanyuanzhi/cook-robot-middle-platform-go/model/request"
 	"github.com/kanyuanzhi/cook-robot-middle-platform-go/model/response"
 	"github.com/kanyuanzhi/cook-robot-middle-platform-go/utils"
-	"log"
 	"strconv"
 	"strings"
 )
@@ -60,7 +59,7 @@ func (api *DishApi) List(c *gin.Context) {
 
 	var dishes []model.SysDish
 	if err := filterDb.Limit(listDishesRequest.PageSize).Offset((listDishesRequest.PageIndex - 1) * listDishesRequest.PageSize).
-		Order("id").Find(&dishes).Error; err != nil {
+		Order("sort, updated_at asc").Find(&dishes).Error; err != nil {
 		response.ErrorMessage(c, err.Error())
 		return
 	}
@@ -196,8 +195,6 @@ func (api *DishApi) Delete(c *gin.Context) {
 		response.ErrorMessage(c, err.Error())
 		return
 	}
-
-	log.Println(dishes)
 
 	var userDeletedDishes []model.SysUserDeletedDish
 	for _, dish := range dishes {

@@ -230,6 +230,13 @@ func (api *DataUpdaterApi) SynchronizePersonalDishes(c *gin.Context) {
 		response.ErrorMessage(c, "RPC调用失败【synchronize】，"+err.Error())
 		return
 	}
+
+	// 远程已经删除用户在本地删除的菜品，需要将本地删除的菜品从数据库中删除
+	if err := global.FXDb.Where("uuid in ?", localDeletedDishUUIDs).Delete(&model.SysUserDeletedDish{}).Error; err != nil {
+		response.ErrorMessage(c, err.Error())
+		return
+	}
+
 	var remoteNeedAddDishUUIDs []uuid.UUID
 	var remoteNeedUpdateDishUUIDs []uuid.UUID
 	var localNeedAddDishes []model.SysDish
