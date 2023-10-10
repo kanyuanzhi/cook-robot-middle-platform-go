@@ -253,14 +253,14 @@ func (api *DataUpdaterApi) SynchronizePersonalDishes(c *gin.Context) {
 	var remoteNeedUpdateDishes []model.SysDish
 	tx := global.FXDb.Begin()
 	if len(remoteNeedAddDishUUIDs) != 0 {
-		if err := tx.Where("uuid in ?", remoteNeedAddDishUUIDs).Find(&remoteNeedAddDishes).Error; err != nil {
+		if err := tx.Where("uuid in ?", remoteNeedAddDishUUIDs).Omit("id").Find(&remoteNeedAddDishes).Error; err != nil {
 			tx.Rollback()
 			response.ErrorMessage(c, err.Error())
 			return
 		}
 	}
 	if len(remoteNeedUpdateDishUUIDs) != 0 {
-		if err := tx.Where("uuid in ?", remoteNeedUpdateDishUUIDs).Find(&remoteNeedUpdateDishes).Error; err != nil {
+		if err := tx.Where("uuid in ?", remoteNeedUpdateDishUUIDs).Omit("id").Find(&remoteNeedUpdateDishes).Error; err != nil {
 			tx.Rollback()
 			response.ErrorMessage(c, err.Error())
 			return
