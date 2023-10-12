@@ -197,7 +197,7 @@ func (api *DataUpdaterApi) UpdateIngredients(c *gin.Context) {
 
 func (api *DataUpdaterApi) SynchronizePersonalDishes(c *gin.Context) {
 	var personalDishes []model.SysDish
-	if err := global.FXDb.Where("is_official = ?", false).Find(&personalDishes).Error; err != nil {
+	if err := global.FXDb.Where("is_official = ? AND owner = ?", false, global.FXSoftwareInfo.SerialNumber).Find(&personalDishes).Error; err != nil {
 		response.ErrorMessage(c, err.Error())
 		return
 	}

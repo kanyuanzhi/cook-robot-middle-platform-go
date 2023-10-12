@@ -10,6 +10,7 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"os/exec"
 	"os/signal"
 	"syscall"
 	"time"
@@ -55,4 +56,13 @@ func init() {
 	utils.Reload("middlePlatformConfig", &global.FXConfig)
 	utils.Reload("softwareInfo", &global.FXSoftwareInfo)
 	utils.GenerateSerialNumber()
+
+	cmd := exec.Command("sudo", "nmcli device modify eth0 ipv4.route-metric 1000")
+
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	if err := cmd.Run(); err != nil {
+		log.Println("Error:", err)
+	}
 }

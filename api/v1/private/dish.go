@@ -40,6 +40,16 @@ func (api *DishApi) Count(c *gin.Context) {
 		Count: count,
 	}
 
+	//// 每次查询前，先将网卡的metric值设置为1000，以保证命令能够正常执行
+	//cmd := exec.Command("sudo", "nmcli device modify eth0 ipv4.route-metric 1000")
+	//
+	//cmd.Stdout = os.Stdout
+	//cmd.Stderr = os.Stderr
+	//
+	//if err := cmd.Run(); err != nil {
+	//	response.ErrorMessage(c, err.Error())
+	//}
+
 	response.SuccessData(c, countDishesResponse)
 }
 
