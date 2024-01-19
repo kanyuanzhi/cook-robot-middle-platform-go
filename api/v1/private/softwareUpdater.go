@@ -15,6 +15,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -34,6 +35,15 @@ func (api *SoftwareUpdaterApi) GetSoftwareInfo(c *gin.Context) {
 }
 
 func (api *SoftwareUpdaterApi) CheckUpdateInfo(c *gin.Context) {
+	cmd := exec.Command("sudo", "nmcli device modify eth0 ipv4.route-metric 1000")
+
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	if err := cmd.Run(); err != nil {
+		log.Println("Error:", err)
+	}
+
 	req := &pb.CheckRequest{
 		Version:      global.FXSoftwareInfo.Version,
 		MachineModel: global.FXSoftwareInfo.MachineModel,

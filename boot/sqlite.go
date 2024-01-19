@@ -34,7 +34,7 @@ func InitSqliteDb() error {
 	global.FXDb = Sqlite()
 	err := global.FXDb.AutoMigrate(migrateList...)
 	if err != nil {
-		slog.Error(err.Error())
+		slog.Error("InitSqliteDb", err.Error())
 		return err
 	}
 	return nil

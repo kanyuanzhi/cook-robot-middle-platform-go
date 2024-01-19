@@ -13,6 +13,7 @@ const (
 	COMMAND_NAME_PAUSE_TO_ADD = "pause_to_add" // single
 	COMMAND_NAME_HEAT         = "heat"         // single
 	COMMAND_NAME_WITHDRAW     = "withdraw"     // multiple
+	COMMAND_NAME_SHUTDOWN     = "shutdown"     // single
 )
 
 const (

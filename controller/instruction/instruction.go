@@ -29,6 +29,7 @@ const (
 	INIT             = InstructionType("init")
 	FINISH           = InstructionType("finish")
 	WITHDRAW         = InstructionType("withdrawer")
+	SHUTDOWN         = InstructionType("shutdown")
 
 	AXIS   = InstructionType("axis")
 	ROTATE = InstructionType("rotate")
@@ -222,7 +223,7 @@ func NewResetRTInstruction(name string) *ResetRTInstruction {
 	}
 }
 
-// 炒菜开始前准备动作
+// InitInstruction 炒菜开始前准备动作
 type InitInstruction struct {
 	Instruction `mapstructure:",squash"`
 }
@@ -236,7 +237,7 @@ func NewInitInstruction(name string) *InitInstruction {
 	}
 }
 
-// 炒菜结束后停止动作
+// FinishInstruction 炒菜结束后停止动作
 type FinishInstruction struct {
 	Instruction `mapstructure:",squash"`
 }
@@ -322,6 +323,16 @@ func NewWithdrawInstruction() *WithdrawInstruction {
 	}
 }
 
+type ShutdownInstruction struct {
+	Instruction `mapstructure:",squash"`
+}
+
+func NewShutdownInstruction() *ShutdownInstruction {
+	return &ShutdownInstruction{
+		Instruction: NewInstruction(SHUTDOWN),
+	}
+}
+
 var InstructionTypeToStruct = map[InstructionType]Instructioner{
 	INGREDIENT:       IngredientInstruction{},
 	SEASONING:        SeasoningInstruction{},
@@ -344,6 +355,7 @@ var InstructionTypeToStruct = map[InstructionType]Instructioner{
 	RESUME:           ResumeInstruction{},
 	PAUSE_TO_ADD:     PauseToAddInstruction{},
 	WITHDRAW:         WithdrawInstruction{},
+	SHUTDOWN:         ShutdownInstruction{},
 
 	AXIS:   AxisInstruction{},
 	ROTATE: RotateInstruction{},

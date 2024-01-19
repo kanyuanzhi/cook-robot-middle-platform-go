@@ -4,6 +4,7 @@ import (
 	"github.com/kanyuanzhi/cook-robot-middle-platform-go/boot"
 	"github.com/kanyuanzhi/cook-robot-middle-platform-go/fxcron"
 	"github.com/kanyuanzhi/cook-robot-middle-platform-go/global"
+	"github.com/kanyuanzhi/cook-robot-middle-platform-go/utils"
 	"log/slog"
 	"time"
 )
@@ -15,6 +16,9 @@ func main() {
 		slog.Warn("数据表已存在")
 		//return
 	}
+
+	utils.ResetPersonalDishOwner()
+
 	//if global.FXDb == nil {
 	//	err := boot.InitDb()
 	//	if err != nil {

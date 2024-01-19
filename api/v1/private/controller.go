@@ -14,6 +14,7 @@ import (
 	"github.com/kanyuanzhi/cook-robot-middle-platform-go/model/response"
 	pb "github.com/kanyuanzhi/cook-robot-middle-platform-go/rpc/command"
 	"github.com/mitchellh/mapstructure"
+	"strconv"
 	"time"
 )
 
@@ -78,6 +79,19 @@ func (api *ControllerApi) Execute(c *gin.Context) {
 					instructionStruct = instruction.NewSeasoningInstruction(step["instructionName"].(string), pumpToWeightMap, pumpToRatioMap)
 				} else {
 					instructionStruct = instruction.InstructionTypeToStruct[instructionType]
+					if instructionType == instruction.STIR_FRY {
+						// 当持续时间误输入为字符串时，将其转换为整型
+						_, ok := step["duration"].(string)
+						if ok {
+							durationUint, err := strconv.Atoi(step["duration"].(string))
+							if err != nil {
+								response.ErrorMessage(c, err.Error())
+								return
+							}
+							step["duration"] = durationUint
+						}
+					}
+
 					err := mapstructure.Decode(step, &instructionStruct)
 					if err != nil {
 						response.ErrorMessage(c, err.Error())
@@ -192,6 +206,14 @@ func (api *ControllerApi) Execute(c *gin.Context) {
 				executeCommandRequest.CommandData.Temperature, 0, 0, instruction.NO_JUDGE))
 			commandStruct = command.Command{
 				CommandName:  command.COMMAND_NAME_HEAT,
+				CommandType:  command.COMMAND_TYPE_SINGLE,
+				Instructions: instructions,
+			}
+		} else if executeCommandRequest.CommandName == command.COMMAND_NAME_SHUTDOWN {
+			var instructions []instruction.Instructioner
+			instructions = append(instructions, instruction.NewShutdownInstruction())
+			commandStruct = command.Command{
+				CommandName:  command.COMMAND_NAME_SHUTDOWN,
 				CommandType:  command.COMMAND_TYPE_SINGLE,
 				Instructions: instructions,
 			}

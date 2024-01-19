@@ -9,8 +9,11 @@ import (
 )
 
 func DataUpdaterRpcClient() pb.DataUpdaterClient {
+	maxSize := 100 * 1024 * 1024
+
 	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", global.FXConfig.DataUpdaterRPC.Host, global.FXConfig.DataUpdaterRPC.Port),
-		grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(20*1024*1024)))
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(maxSize), grpc.MaxCallSendMsgSize(maxSize)))
 	if err != nil {
 		return nil
 	}

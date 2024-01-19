@@ -11,12 +11,23 @@ import (
 	pb "github.com/kanyuanzhi/cook-robot-middle-platform-go/rpc/dataUpdater"
 	"gorm.io/gorm"
 	"log"
+	"os"
+	"os/exec"
 	"time"
 )
 
 type DataUpdaterApi struct{}
 
 func (api *DataUpdaterApi) UpdateOfficialDishes(c *gin.Context) {
+	cmd := exec.Command("sudo", "nmcli device modify eth0 ipv4.route-metric 1000")
+
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	if err := cmd.Run(); err != nil {
+		log.Println("Error:", err)
+	}
+
 	if global.FXControllerStatus.IsRunning {
 		response.ErrorMessage(c, "有菜品正在炒制，请稍后同步菜品")
 		return
@@ -37,7 +48,7 @@ func (api *DataUpdaterApi) UpdateOfficialDishes(c *gin.Context) {
 		LocalDishesInfoJson: officialDishesInfoBytes,
 		UserSerialNumber:    global.FXSoftwareInfo.SerialNumber,
 	}
-	ctxGRPC, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctxGRPC, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
 	res, err := global.FXDataUpdaterRpcClient.FetchOfficialDishes(ctxGRPC, req)
