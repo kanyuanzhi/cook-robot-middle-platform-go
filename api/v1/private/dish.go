@@ -68,7 +68,8 @@ func (api *DishApi) List(c *gin.Context) {
 	}
 
 	var dishes []model.SysDish
-	if err := filterDb.Limit(listDishesRequest.PageSize).Offset((listDishesRequest.PageIndex - 1) * listDishesRequest.PageSize).
+	var count int64
+	if err := filterDb.Count(&count).Limit(listDishesRequest.PageSize).Offset((listDishesRequest.PageIndex - 1) * listDishesRequest.PageSize).
 		Order("sort, updated_at asc").Find(&dishes).Error; err != nil {
 		response.ErrorMessage(c, err.Error())
 		return
@@ -89,6 +90,7 @@ func (api *DishApi) List(c *gin.Context) {
 
 	listDishesResponse := response.ListDishes{
 		Dishes: dishesInfo,
+		Count:  count,
 	}
 
 	response.SuccessData(c, listDishesResponse)

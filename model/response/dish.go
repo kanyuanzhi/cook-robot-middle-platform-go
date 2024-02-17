@@ -11,6 +11,7 @@ type CountDishes struct {
 
 type ListDishes struct {
 	Dishes []model.DishInfo `json:"dishes"`
+	Count  int64            `json:"count"`
 }
 
 type UpdateDishImage struct {

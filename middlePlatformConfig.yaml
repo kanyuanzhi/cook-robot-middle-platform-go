@@ -31,7 +31,7 @@ SoftwareUpdaterRPC:
   controllerFilename: cook-robot-controller-go
 
 DataUpdaterRPC:
-#  host: localhost
-  host: 221.229.103.87
+  host: localhost
+#  host: 221.229.103.87
 #  host: 120.78.170.227
   port: 10001

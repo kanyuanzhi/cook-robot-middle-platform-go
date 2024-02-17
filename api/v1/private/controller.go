@@ -217,6 +217,70 @@ func (api *ControllerApi) Execute(c *gin.Context) {
 				CommandType:  command.COMMAND_TYPE_SINGLE,
 				Instructions: instructions,
 			}
+		} else if executeCommandRequest.CommandName == command.COMMAND_NAME_OPEN_WATER_SOURCE_VALVE {
+			var instructions []instruction.Instructioner
+			instructions = append(instructions, instruction.NewOpenWaterSourceValveInstruction())
+			commandStruct = command.Command{
+				CommandName:  command.COMMAND_NAME_OPEN_WATER_SOURCE_VALVE,
+				CommandType:  command.COMMAND_TYPE_SINGLE,
+				Instructions: instructions,
+			}
+		} else if executeCommandRequest.CommandName == command.COMMAND_NAME_CLOSE_WATER_SOURCE_VALVE {
+			var instructions []instruction.Instructioner
+			instructions = append(instructions, instruction.NewCloseWaterSourceValveInstruction())
+			commandStruct = command.Command{
+				CommandName:  command.COMMAND_NAME_CLOSE_WATER_SOURCE_VALVE,
+				CommandType:  command.COMMAND_TYPE_SINGLE,
+				Instructions: instructions,
+			}
+		} else if executeCommandRequest.CommandName == command.COMMAND_NAME_OPEN_WATER_PUMP_VALVE {
+			var instructions []instruction.Instructioner
+			instructions = append(instructions, instruction.NewOpenWaterPumpValveInstruction())
+			commandStruct = command.Command{
+				CommandName:  command.COMMAND_NAME_OPEN_WATER_PUMP_VALVE,
+				CommandType:  command.COMMAND_TYPE_SINGLE,
+				Instructions: instructions,
+			}
+		} else if executeCommandRequest.CommandName == command.COMMAND_NAME_CLOSE_WATER_PUMP_VALVE {
+			var instructions []instruction.Instructioner
+			instructions = append(instructions, instruction.NewCloseWaterPumpValveInstruction())
+			commandStruct = command.Command{
+				CommandName:  command.COMMAND_NAME_CLOSE_WATER_PUMP_VALVE,
+				CommandType:  command.COMMAND_TYPE_SINGLE,
+				Instructions: instructions,
+			}
+		} else if executeCommandRequest.CommandName == command.COMMAND_NAME_OPEN_NOZZLE_VALVE {
+			var instructions []instruction.Instructioner
+			instructions = append(instructions, instruction.NewOpenNozzleValveInstruction())
+			commandStruct = command.Command{
+				CommandName:  command.COMMAND_NAME_OPEN_NOZZLE_VALVE,
+				CommandType:  command.COMMAND_TYPE_SINGLE,
+				Instructions: instructions,
+			}
+		} else if executeCommandRequest.CommandName == command.COMMAND_NAME_CLOSE_NOZZLE_VALVE {
+			var instructions []instruction.Instructioner
+			instructions = append(instructions, instruction.NewCloseNozzleValveInstruction())
+			commandStruct = command.Command{
+				CommandName:  command.COMMAND_NAME_CLOSE_NOZZLE_VALVE,
+				CommandType:  command.COMMAND_TYPE_SINGLE,
+				Instructions: instructions,
+			}
+		} else if executeCommandRequest.CommandName == command.COMMAND_NAME_OPEN_PUMP_7_VALVE {
+			var instructions []instruction.Instructioner
+			instructions = append(instructions, instruction.NewOpenPump7ValveInstruction())
+			commandStruct = command.Command{
+				CommandName:  command.COMMAND_NAME_OPEN_PUMP_7_VALVE,
+				CommandType:  command.COMMAND_TYPE_SINGLE,
+				Instructions: instructions,
+			}
+		} else if executeCommandRequest.CommandName == command.COMMAND_NAME_CLOSE_PUMP_7_VALVE {
+			var instructions []instruction.Instructioner
+			instructions = append(instructions, instruction.NewClosePump7ValveInstruction())
+			commandStruct = command.Command{
+				CommandName:  command.COMMAND_NAME_CLOSE_PUMP_7_VALVE,
+				CommandType:  command.COMMAND_TYPE_SINGLE,
+				Instructions: instructions,
+			}
 		} else {
 			response.ErrorMessage(c, errors.New("命令名称错误").Error())
 			return
