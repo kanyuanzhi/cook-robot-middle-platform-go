@@ -34,9 +34,11 @@ func (api *IngredientShapeApi) List(c *gin.Context) {
 	ingredientShapesInfo := []model.IngredientShapeInfo{}
 	for _, ingredientShape := range ingredientShapes {
 		ingredientShapesInfo = append(ingredientShapesInfo, model.IngredientShapeInfo{
-			Id:   ingredientShape.Id,
-			Sort: ingredientShape.Sort,
-			Name: ingredientShape.Name,
+			Id:     ingredientShape.Id,
+			Sort:   ingredientShape.Sort,
+			Name:   ingredientShape.Name,
+			NameEn: ingredientShape.NameEn,
+			NameTw: ingredientShape.NameTw,
 		})
 	}
 

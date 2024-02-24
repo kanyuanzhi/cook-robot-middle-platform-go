@@ -7,6 +7,7 @@ type CountDishes struct {
 	EnableCuisineFilter bool   `json:"enableCuisineFilter" form:"enableCuisineFilter"`
 	CuisineFilter       string `json:"cuisineFilter" form:"cuisineFilter"`
 	IsOfficial          bool   `json:"isOfficial" form:"isOfficial"`
+	Local               string `json:"local" form:"local"`
 }
 
 type ListDishes struct {
@@ -39,6 +40,7 @@ type AddDish struct {
 	Name    string                   `json:"name"`
 	Cuisine uint                     `json:"cuisine"`
 	Steps   []map[string]interface{} `json:"steps"`
+	Local   string                   `json:"local"`
 }
 
 type GetDish struct {

@@ -24,7 +24,7 @@ func (api *DishApi) Count(c *gin.Context) {
 	}
 
 	filterDb, err := request.GenerateDishQueryCondition(countDishesRequest.Filter, countDishesRequest.EnableCuisineFilter,
-		strings.Split(countDishesRequest.CuisineFilter, ","), countDishesRequest.IsOfficial)
+		strings.Split(countDishesRequest.CuisineFilter, ","), countDishesRequest.IsOfficial, countDishesRequest.Local)
 	if err != nil {
 		response.ErrorMessage(c, err.Error())
 		return
@@ -61,7 +61,7 @@ func (api *DishApi) List(c *gin.Context) {
 	}
 
 	filterDb, err := request.GenerateDishQueryCondition(listDishesRequest.Filter, listDishesRequest.EnableCuisineFilter,
-		strings.Split(listDishesRequest.CuisineFilter, ","), listDishesRequest.IsOfficial)
+		strings.Split(listDishesRequest.CuisineFilter, ","), listDishesRequest.IsOfficial, listDishesRequest.Local)
 	if err != nil {
 		response.ErrorMessage(c, err.Error())
 		return
@@ -85,6 +85,7 @@ func (api *DishApi) List(c *gin.Context) {
 			Steps:           dish.Steps,
 			CustomStepsList: dish.CustomStepsList,
 			Cuisine:         dish.Cuisine,
+			Local:           dish.Local,
 		})
 	}
 
@@ -181,6 +182,7 @@ func (api *DishApi) UpdateWithSteps(c *gin.Context) {
 			Steps:           dish.Steps,
 			CustomStepsList: dish.CustomStepsList,
 			Cuisine:         dish.Cuisine,
+			Local:           dish.Local,
 		},
 	}
 
@@ -265,6 +267,7 @@ func (api *DishApi) Add(c *gin.Context) {
 		IsOfficial: false,
 		IsShared:   false,
 		Owner:      global.FXSoftwareInfo.SerialNumber,
+		Local:      addDishRequest.Local,
 	}
 
 	if err := global.FXDb.Create(&dish).Error; err != nil {
@@ -284,6 +287,7 @@ func (api *DishApi) Add(c *gin.Context) {
 			IsOfficial:      dish.IsOfficial,
 			IsShared:        dish.IsShared,
 			Owner:           dish.Owner,
+			Local:           dish.Local,
 		},
 	}
 
@@ -355,6 +359,7 @@ func (api *DishApi) Get(c *gin.Context) {
 			IsOfficial:      dish.IsOfficial,
 			IsShared:        dish.IsShared,
 			IsMarked:        dish.IsMarked,
+			Local:           dish.Local,
 		},
 	}
 
@@ -477,6 +482,7 @@ func (api *DishApi) AddToPersonals(c *gin.Context) {
 		IsShared:        false,
 		IsMarked:        false,
 		Owner:           global.FXSoftwareInfo.SerialNumber,
+		Local:           dish.Local,
 	}
 
 	if err := global.FXDb.Create(&personalDish).Error; err != nil {

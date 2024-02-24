@@ -47,6 +47,7 @@ func (api *DataUpdaterApi) UpdateOfficialDishes(c *gin.Context) {
 	req := &pb.FetchOfficialDishesRequest{
 		LocalDishesInfoJson: officialDishesInfoBytes,
 		UserSerialNumber:    global.FXSoftwareInfo.SerialNumber,
+		Version:             global.FXSoftwareInfo.Version,
 	}
 	ctxGRPC, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
@@ -54,7 +55,7 @@ func (api *DataUpdaterApi) UpdateOfficialDishes(c *gin.Context) {
 	res, err := global.FXDataUpdaterRpcClient.FetchOfficialDishes(ctxGRPC, req)
 	if err != nil {
 		log.Println(err)
-		response.ErrorMessage(c, "RPC调用失败")
+		response.ErrorMessage(c, "RPC调用失败【fetchOfficials】，"+err.Error())
 		return
 	}
 
@@ -233,6 +234,7 @@ func (api *DataUpdaterApi) SynchronizePersonalDishes(c *gin.Context) {
 		UserSerialNumber:          global.FXSoftwareInfo.SerialNumber,
 		LocalDishesInfoJson:       personalDishesInfoBytes,
 		LocalDeletedDishUuidsJson: localDeletedDishUuidsJson,
+		Version:                   global.FXSoftwareInfo.Version,
 	}
 	ctxGRPC, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()

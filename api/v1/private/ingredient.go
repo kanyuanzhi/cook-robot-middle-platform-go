@@ -61,10 +61,12 @@ func (api *IngredientApi) List(c *gin.Context) {
 	ingredientsInfo := []model.IngredientInfo{}
 	for _, ingredient := range ingredients {
 		ingredientsInfo = append(ingredientsInfo, model.IngredientInfo{
-			Id:   ingredient.Id,
-			Sort: ingredient.Sort,
-			Name: ingredient.Name,
-			Type: ingredient.Type,
+			Id:     ingredient.Id,
+			Sort:   ingredient.Sort,
+			Name:   ingredient.Name,
+			NameEn: ingredient.NameEn,
+			NameTw: ingredient.NameTw,
+			Type:   ingredient.Type,
 		})
 	}
 

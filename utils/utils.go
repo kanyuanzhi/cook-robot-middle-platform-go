@@ -10,6 +10,7 @@ import (
 	"log"
 	"net"
 	"os"
+	"strings"
 )
 
 // Reload 解析配置文件configName到target
@@ -91,4 +92,73 @@ func ResetPersonalDishOwner() {
 		return
 	}
 	log.Println("ResetPersonalDishOwner成功")
+}
+
+func AddColumns() {
+	addColumn("sys_dish", "local")
+
+	updateLocalSql := "UPDATE sys_dish SET local = 'cn' WHERE local is NULL;"
+	if err := global.FXDb.Exec(updateLocalSql).Error; err != nil {
+		log.Println("AddColumn失败", err)
+		return
+	}
+
+	addColumn("sys_cuisine", "name_en")
+	addColumn("sys_cuisine", "name_tw")
+	addColumn("sys_ingredient", "name_en")
+	addColumn("sys_ingredient", "name_tw")
+	addColumn("sys_ingredient_type", "name_en")
+	addColumn("sys_ingredient_type", "name_tw")
+	addColumn("sys_ingredient_shape", "name_en")
+	addColumn("sys_ingredient_shape", "name_tw")
+	addColumn("sys_seasoning", "name_en")
+	addColumn("sys_seasoning", "name_tw")
+
+	sql := "UPDATE sys_seasoning " +
+		"SET name_en = " +
+		"CASE " +
+		"WHEN name = '食用油' THEN 'oil' " +
+		"WHEN name = '生抽' THEN 'light soy sauce' " +
+		"WHEN name = '老抽' THEN 'soy sauce' " +
+		"WHEN name = '醋' THEN 'vinegar' " +
+		"WHEN name = '料酒' THEN 'cooking wine' " +
+		"WHEN name = '纯净水' THEN 'water' " +
+		"WHEN name = '自来水1' THEN 'tap water1' " +
+		"WHEN name = '自来水2' THEN 'tap water2' " +
+		"WHEN name = '食盐' THEN 'salt' " +
+		"WHEN name = '鸡精' THEN 'chicken powder' " +
+		"ELSE name_en " +
+		"END, " +
+		"name_tw = " +
+		"CASE " +
+		"WHEN name = '食用油' THEN '食用油' " +
+		"WHEN name = '生抽' THEN '生抽' " +
+		"WHEN name = '老抽' THEN '老抽' " +
+		"WHEN name = '醋' THEN '醋' " +
+		"WHEN name = '料酒' THEN '料酒' " +
+		"WHEN name = '纯净水' THEN '純淨水' " +
+		"WHEN name = '自来水1' THEN '自來水1' " +
+		"WHEN name = '自来水2' THEN '自來水2' " +
+		"WHEN name = '食盐' THEN '食鹽' " +
+		"WHEN name = '鸡精' THEN '鸡精' " +
+		"ELSE name_tw " +
+		"END;"
+	if err := global.FXDb.Exec(sql).Error; err != nil {
+		log.Println("AddColumn失败", err)
+		return
+	}
+	log.Println("AddColumns成功")
+}
+
+func addColumn(table string, column string) error {
+	sql := "ALTER TABLE " + table + " ADD " + column + " TEXT;"
+	if err := global.FXDb.Exec(sql).Error; err != nil {
+		if strings.Contains(err.Error(), "duplicate column name") {
+			log.Println(column + "字段已存在")
+		} else {
+			log.Println("AddColumn失败", err)
+			return err
+		}
+	}
+	return nil
 }

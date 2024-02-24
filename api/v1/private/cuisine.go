@@ -24,6 +24,8 @@ func (api *CuisineApi) List(c *gin.Context) {
 			Id:          cuisine.Id,
 			Sort:        cuisine.Sort,
 			Name:        cuisine.Name,
+			NameEn:      cuisine.NameEn,
+			NameTw:      cuisine.NameTw,
 			UnDeletable: cuisine.UnDeletable,
 		})
 	}

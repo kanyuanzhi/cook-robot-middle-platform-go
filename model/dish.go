@@ -17,6 +17,7 @@ type SysDish struct {
 	IsShared        bool                                `json:"isShared" gorm:"comment:是否共享菜品;default:false"`
 	IsMarked        bool                                `json:"isMarked" gorm:"是否收藏菜品至我的菜品;default:false"`
 	Owner           string                              `json:"owner" gorm:"comment:菜品所有者;default:''"`
+	Local           string                              `json:"local" gorm:"comment:本地语言（en,cn,tw）;default:'cn'"`
 }
 
 type DishInfo struct {
@@ -31,4 +32,5 @@ type DishInfo struct {
 	IsShared        bool                                `json:"isShared"`
 	IsMarked        bool                                `json:"isMarked"`
 	Owner           string                              `json:"owner"`
+	Local           string                              `json:"local"`
 }

@@ -21,10 +21,12 @@ func (api *SeasoningApi) List(c *gin.Context) {
 	seasoningsInfo := []model.SeasoningInfo{}
 	for _, seasoning := range seasonings {
 		seasoningsInfo = append(seasoningsInfo, model.SeasoningInfo{
-			Id:    seasoning.Id,
-			Name:  seasoning.Name,
-			Pump:  seasoning.Pump,
-			Ratio: seasoning.Ratio,
+			Id:     seasoning.Id,
+			Name:   seasoning.Name,
+			NameEn: seasoning.NameEn,
+			NameTw: seasoning.NameTw,
+			Pump:   seasoning.Pump,
+			Ratio:  seasoning.Ratio,
 		})
 	}
 

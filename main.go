@@ -18,6 +18,7 @@ func main() {
 	}
 
 	utils.ResetPersonalDishOwner()
+	utils.AddColumns()
 
 	//if global.FXDb == nil {
 	//	err := boot.InitDb()

@@ -37,6 +37,8 @@ func (api *IngredientTypeApi) List(c *gin.Context) {
 			Id:          ingredientType.Id,
 			Sort:        ingredientType.Sort,
 			Name:        ingredientType.Name,
+			NameEn:      ingredientType.NameEn,
+			NameTw:      ingredientType.NameTw,
 			UnDeletable: ingredientType.UnDeletable,
 		})
 	}
